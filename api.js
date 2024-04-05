@@ -20,6 +20,7 @@ const uti = {
 window.onload = () => {
     fetchTab();
     setInterval(fetchTab, 2000); 
+    setInterval(getTime, 1000);
 };
 
 const getMousePos = (e) => { 
@@ -56,18 +57,28 @@ function fetchTab() {
     });
 }
 
-document.getElementById("temps").addEventListener("click", () => {
+const getTime = () => {
     fetch(`${url}/temps-attente?uid=${uti.uid}`)
     .then((response) => {
         return response.json();
     })
     .then((data) => {
-        console.log(data);
+        printTime(data);
     })
     .catch((error) => {
         console.log(error);
     })
-});
+};
+
+const printTime = (data) => {
+    let attente = document.getElementById("attente");
+    if (data.tempsAttente <= 0){
+        attente.textContent = "Vous pouvez modifier un pixel";
+    }
+    else {
+        attente.textContent = `${Math.round(data.tempsAttente*0.001)} secondes avant de poser un pixel`;
+    }
+}
 
 document.getElementById("equipe").addEventListener("click", () => {
     fetch(`${url}/equipe-utilisateur?uid=${uti.uid}`)
@@ -118,31 +129,36 @@ document.getElementById("modifier").addEventListener("click", () => {
 
 canvas.addEventListener("click", () => {
     if (modif){
-        fetch(`${url}/modifier-case`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "color": document.getElementById("couleur").value,
-                "uid": uti.uid,
-                "col": Math.round(mousePos.x/zoom),
-                "row": Math.round(mousePos.y/zoom)
-            })
-        })
-        .then((response) => {
-            if (!response.ok){
-                return response.json().then(data => {console.log(data.msg)})
-            }
-            return response.json();
-        })
-        .then((data) => {
-            console.log(data.msg);
-        })
-        fetchTab();
-        modif = false;
+        putPixel(mousePos);
     }
  })
+
+
+const putPixel = (pos) => {
+    fetch(`${url}/modifier-case`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            "color": document.getElementById("couleur").value,
+            "uid": uti.uid,
+            "col": Math.round(pos.x/zoom),
+            "row": Math.round(pos.y/zoom)
+        })
+    })
+    .then((response) => {
+        if (!response.ok){
+            return response.json().then(data => {console.log(data.msg)})
+        }
+        return response.json();
+    })
+    .then((data) => {
+        console.log(data.msg);
+    })
+    fetchTab();
+    modif = false;
+}
 
 function update() {
     
