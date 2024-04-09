@@ -24,33 +24,28 @@
             </table>
         </div>
         <canvas id="canvas" width="500" height="500"></canvas>
-        <form>
-            <label for="identification">Identification obligatoire</label>
-            <input type="text" name="identification">
-            <label for="couleur">Choisir une couleur</label>
-            <input type="color" name="couleur" id="couleur">
-            <label for="attente">Temps d'attente avant modification</label>
-            <p name="attente" id="attente">Vous pouvez modifier un pixel</p>
-            <label for="equipe">Choisir une équipe</label>
-            <fieldset>
-                <input type="radio" name="equipe1">
-                <label for="equipe1">Equipe 1</label>
-                <input type="radio" name="equipe2">
-                <label for="equipe1">Equipe 2</label>
-                <input type="radio" name="equipe3">
-                <label for="equipe1">Equipe 3</label>
-                <input type="radio" name="equipe4">
-                <label for="equipe1">Equipe 4</label>
-            </fieldset>
-        </form>
+        <label for="identification">Identification obligatoire</label>
+        <input type="text" name="identification" id="uid" value="e6d7a2c5">
+        <label for="couleur">Choisir une couleur</label>
+        <input type="color" name="couleur" id="couleur">
+        <label for="attente">Temps d'attente avant modification</label>
+        <p name="attente" id="attente">Vous pouvez modifier un pixel</p>
+        <fieldset>
+            <legend>Choisie une équipe</legend>
+            <input type="radio" name="equipe" value="1">
+            <label for="1">Equipe 1</label>
+            <input type="radio" name="equipe" value="2">
+            <label for="2">Equipe 2</label>
+            <input type="radio" name="equipe" value="3">
+            <label for="3">Equipe 3</label>
+            <input type="radio" name="equipe" value="4">
+            <label for="4">Equipe 4</label>
+        </fieldset>
+        <p id="actualTeam">Vous n'avez pas d'équipe</p>
+        <ul id="listeJoueurs"></ul>
     </main>
-    <button id="tableau">Tableau</button>
-    <button id="temps">Temps d'attente</button>
-    <button id="equipe">equipe</button>
-    <button id="liste">liste joueurs</button>
-    <button id="choisir">choisir equipe</button>
     <button id="modifier">Modifier case</button>
     
-    <script type="module" src="api.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
