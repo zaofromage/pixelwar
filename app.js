@@ -77,6 +77,11 @@ const printTeam = async () => {
 const printPlayers = async () => {
     let players = await listTeams(document.getElementById("uid").value);
     //remove all li from ul
+    const lj = document.getElementById("listeJoueurs");
+    while (lj.firstChild) {
+        lj.removeChild(lj.lastChild);
+    }
+
     players.map((player) => {
         let li = document.createElement("li");
         li.textContent = `${player.nom} de l'équipe ${player.equipe} a posé ${player.nbPixelsModifies} pixels`;
