@@ -11,18 +11,6 @@
         <h1>LA GUERRE DES PIXELS</h1>
     </header>
     <main>
-        <div id="tab">
-            <img src="image.png" alt="images du truc la tsais">
-            <table>
-                <thead>
-                    <tr>Nom</tr>
-                    <tr>Equipe</tr>
-                    <tr>Dernière Modification</tr>
-                    <tr>Banni</tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
         <canvas id="canvas" width="500" height="500"></canvas>
         <label for="identification">Identification obligatoire</label>
         <input type="text" name="identification" id="uid" value="e6d7a2c5">
@@ -42,9 +30,18 @@
             <label for="4">Equipe 4</label>
         </fieldset>
         <p id="actualTeam">Vous n'avez pas d'équipe</p>
-        <ul id="listeJoueurs"></ul>
+        <div id="tab">
+            <table>
+                <thead>
+                    <th>Nom</th>
+                    <th>Equipe</th>
+                    <th>Dernière Modification</th>
+                    <th>Banni</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </main>
-    <button id="modifier">Modifier case</button>
     
     <script type="module" src="app.js"></script>
 </body>

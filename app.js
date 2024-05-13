@@ -50,11 +50,14 @@ const printTime = async () => {
     let attente = document.getElementById("attente");
     if (time.code != 200) {
         attente.textContent = "Entrez un uid";
+        modif = false;
     }
     else if (time.data.tempsAttente <= 0){
         attente.textContent = "Vous pouvez modifier un pixel";
+        modif = true;
     }
     else {
+        modif = false;
         attente.textContent = `${Math.round(time.data.tempsAttente*0.001)} secondes avant de poser un pixel`;
     }
 }
@@ -76,17 +79,26 @@ const printTeam = async () => {
 
 const printPlayers = async () => {
     let players = await listTeams(document.getElementById("uid").value);
-    //remove all li from ul
-    const lj = document.getElementById("listeJoueurs");
-    while (lj.firstChild) {
-        lj.removeChild(lj.lastChild);
-    }
-
-    players.map((player) => {
-        let li = document.createElement("li");
-        li.textContent = `${player.nom} de l'équipe ${player.equipe} a posé ${player.nbPixelsModifies} pixels`;
-        document.getElementById("listeJoueurs").appendChild(li);
+    let body = document.querySelector('tbody');
+    body.remove();
+    body = document.createElement('tbody');
+    players.map(p => {
+        const tr = document.createElement('tr');
+        let nom = document.createElement('td');
+        nom.textContent = p.nom;
+        let equipe = document.createElement('td');
+        equipe.textContent = p.equipe;
+        let lastMod = document.createElement('td');
+        lastMod.textContent = p.lastModificationPixel;
+        let banned = document.createElement('td');
+        banned.textContent = p.banned;
+        tr.appendChild(nom);
+        tr.appendChild(equipe);
+        tr.appendChild(lastMod);
+        tr.appendChild(banned);
+        body.appendChild(tr);
     })
+    document.getElementById('tab').appendChild(body);
 }
 
 const changeTeam = async (radio) => {
@@ -100,11 +112,6 @@ const changeTeam = async (radio) => {
     }
     await printTeam();
 }
-
-document.getElementById("modifier").addEventListener("click", () => {
-    modif = !modif;
-    console.log(modif);
-});
 
 
 canvas.addEventListener("click", () => {
