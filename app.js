@@ -47,18 +47,40 @@ canvas.addEventListener("mousemove", (e) => {
 
 const printTime = async () => {
     let time = await getTime(document.getElementById("uid").value);
-    let attente = document.getElementById("attente");
+    const fieldset = document.querySelector('fieldset');
+    const main = document.querySelector('main');
+    let content = document.querySelector('#attente');
+    let progress = document.querySelector('progress');
     if (time.code != 200) {
-        attente.textContent = "Entrez un uid";
+        if (!content) {
+            progress.remove();
+            content = document.createElement('p');
+            content.id = 'attente';
+            main.insertBefore(content, fieldset);
+        }
+        content.textContent = "Entrez un uid";
         modif = false;
     }
     else if (time.data.tempsAttente <= 0){
-        attente.textContent = "Vous pouvez modifier un pixel";
+        if (!content) {
+            progress.remove();
+            content = document.createElement('p');
+            content.id = 'attente';
+            main.insertBefore(content, fieldset);
+        }
+        content.textContent = "Vous pouvez modifier un pixel";
         modif = true;
     }
     else {
+        if (!progress) {
+            content.remove();
+            progress = document.createElement('progress');
+            progress.max = 15;
+            main.insertBefore(progress, fieldset);
+        }
+        progress.value = 15 - Math.round(time.data.tempsAttente*0.001);
+        main.insertBefore(progress, fieldset);
         modif = false;
-        attente.textContent = `${Math.round(time.data.tempsAttente*0.001)} secondes avant de poser un pixel`;
     }
 }
 
