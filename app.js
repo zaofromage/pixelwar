@@ -86,13 +86,8 @@ const printTime = async () => {
 
 const printTeam = async () => {
     let equipe = await getTeam(document.getElementById("uid").value);
-    let team = document.getElementById("actualTeam");
     if (equipe.data.equipe <= 0) {
-        team.textContent = "Vous n'avez pas d'équipe";
         checkRadio();
-    }
-    else if (equipe.data.equipe <= 4) {
-        team.textContent = `Vous êtes dans l'équipe ${equipe.data.equipe}`;
     }
     else {
         team.textContent = "L'uid n'existe pas";
